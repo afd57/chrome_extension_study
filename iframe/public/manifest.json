@@ -30,6 +30,7 @@
         "js": [
             "contentScript.js"
         ],
+        "css": ["style.css"],
         "all_frames": true
     }],
     "web_accessible_resources": [

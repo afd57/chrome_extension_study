@@ -14,6 +14,10 @@ import { log } from './common/utils'
 // Log `title` of current active web page
 
 function addIframe() {
+    const popUp = document.createElement('div');
+    popUp.className = "popup"
+    document.body.appendChild(popUp);
+
     const iframe = document.createElement('iframe');
     iframe.addEventListener('load', () => {
         iframe.contentWindow.postMessage({
@@ -31,7 +35,7 @@ function addIframe() {
     // called many times over a session, you'll have a memory leak of more and more listeners being added to the page.
     window.addEventListener('message', messageHandler);
 
-    document.body.appendChild(iframe);
+    popUp.appendChild(iframe);
 }
 const pageTitle = document.head.getElementsByTagName('title')[0].innerHTML;
 log(

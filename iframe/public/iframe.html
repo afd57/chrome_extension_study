@@ -2,21 +2,31 @@
 <html>
 
 <head>
-    <style type="text/css">
-        html,
-        body {
-            width: 100%;
+    <style>
+        .iframe-container {
+            overflow: hidden;
+            /* Calculated from the aspect ration of the content (in case of 16:9 it is 9/16= 
+  0.5625) */
+            padding-top: 56.25%;
+            position: relative;
+        }
+        
+        .iframe-container iframe {
+            border: 0;
             height: 100%;
-            margin: 0;
-            padding: 0;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
         }
     </style>
-
     <script src="iframe.js"></script>
 </head>
 
 <body>
-    <h1>DENEME</h1>
+    <div class="iframe-container">
+        <iframe src="https://oz-box.herokuapp.com/"></iframe>
+    </div>
 </body>
 
 </html>

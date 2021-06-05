@@ -9,7 +9,7 @@ window.addEventListener('message', function(event) {
         const message = { innerFrameData: event.data };
         const transferableList = event.data && event.data.transferableList;
         window.parent.postMessage(message, parentOrigin, transferableList);
-    } else if (event.origin.match(/^https:\/\/\w+\.google\.com$/)) { // needs to match url of the site your extension puts the iframe in
+    } else if (event.origin.match(/^https:\/\/\w+\.stackoverflow\.com$/)) { // needs to match url of the site your extension puts the iframe in
         if (event.data.eventName === 'init') {
             parentOrigin = event.origin;
             setupIFrame(event.data.iframeSrc);
