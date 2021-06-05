@@ -12,6 +12,27 @@ import { log } from './common/utils'
 // See https://developer.chrome.com/extensions/content_scripts
 
 // Log `title` of current active web page
+
+function addIframe() {
+    const iframe = document.createElement('iframe');
+    iframe.addEventListener('load', () => {
+        iframe.contentWindow.postMessage({
+            eventName: 'init',
+            iframeSrc: 'https://stackoverflow.com/questions/6570363/chrome-extension-content-scripts-and-iframe' // whatever url you want. Probably will be a URL to your own domain in practice
+        }, '*');
+    }, false);
+    iframe.src = chrome.runtime.getURL('iframe.html');
+
+    function messageHandler(event) {
+        if (event.source !== iframe) return;
+        console.log('got message from iframe', event.data);
+    }
+    // If you remove the iframe from the page later, make sure you remove this listener too! Otherwise if this function is
+    // called many times over a session, you'll have a memory leak of more and more listeners being added to the page.
+    window.addEventListener('message', messageHandler);
+
+    document.body.appendChild(iframe);
+}
 const pageTitle = document.head.getElementsByTagName('title')[0].innerHTML;
 log(
     `Page title is: '${pageTitle}' - evaluated by Chrome extension's 'contentScript.js' file`
@@ -33,6 +54,7 @@ chrome.runtime.sendMessage({
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === 'COUNT') {
         log(`Current count is ${request.payload.count}`);
+        addIframe();
     }
 
     // Send an empty response
